@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+
+Route::get('search',"ProductController@search")->name('autocomplete_code');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

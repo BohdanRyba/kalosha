@@ -53,4 +53,9 @@
             <button class="btn btn-block btn-success" type="submit">Сохранить</button>
         </form>
     </div>
+
 @endsection
+
+@section('ckeditor')
+    @include('admin.partials._ckeditor',['name'=>'description'])
+@stop

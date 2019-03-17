@@ -73,7 +73,10 @@ class ProductController extends Controller
         $page = $this->page;
         $page['action'] = __FUNCTION__;
         $page['id'] = $product->id;
-        return view('admin.products.show', compact('page', 'product'));
+        if ($product){
+            return view('admin.products.show', compact('page', 'product'));
+        }
+        return redirect()->back(404);
     }
 
     /**
@@ -86,8 +89,10 @@ class ProductController extends Controller
     {
         $page = $this->page;
         $page['action'] = __FUNCTION__;
-
-        return view('admin.products.edit', compact('page'));
+        if ($product){
+            return view('admin.products.edit',compact('page','product'));
+        }
+        return redirect()->back(404);
     }
 
     /**
@@ -99,7 +104,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return redirect(route('products.index'));
     }
 
     /**
@@ -110,6 +116,16 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        if ($product){
+            $product->delete();
+            return redirect(route('products.index'));
+        }
+        return redirect()->back(404);
+    }
+
+    public function search(Request $request)
+    {
+        $products = Product::where('code','like', '%'.$request->input('query').'%')->get();
+        return response()->json($products);
     }
 }
