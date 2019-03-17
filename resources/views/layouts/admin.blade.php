@@ -13,7 +13,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -93,3 +92,15 @@
 
 </body>
 </html>
+<script>
+    import OwlCarousele from "../../js/components/OwlCarousele";
+    export default {
+        components: {OwlCarousele}
+    }
+</script>
+<script>
+    import OwlCarousele from "../../js/components/OwlCarousele";
+    export default {
+        components: {OwlCarousele}
+    }
+</script>

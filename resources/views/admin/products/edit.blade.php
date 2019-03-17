@@ -14,7 +14,7 @@
 
     <a href="{{route('products.index')}}" class="btn btn-warning">Назад</a>
     <div class="card col-12">
-        <form action="{{route('products.update',$product->id)}}" method="post">
+        <form action="{{route('products.update',$product->id)}}" enctype="multipart/form-data" method="post">
             {{method_field('put')}}
             @csrf
             <div class="form-group">

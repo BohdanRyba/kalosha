@@ -13,7 +13,7 @@
 @section('content')
     <a href="{{route('products.index')}}" class="btn btn-warning">Назад</a>
     <div class="card col-12">
-        <form action="{{route('products.store')}}" method="post">
+        <form enctype="multipart/form-data" action="{{route('products.store')}}" method="post">
             @csrf
             <div class="form-group">
                 <label for="title">Название товара</label>
@@ -22,7 +22,8 @@
             </div>
             <div class="form-group">
                 <label for="main_image">Главное изображение товара</label>
-                <input required name="main_image" type="file" value="{{ old('main_image') }}"
+                <img src="{{old('main_image')}}" alt="{{old('title')}}">
+                <input required name="main_image" type="file"
                        class="form-control btn btn-info" id="main_image"
                        placeholder="Главное изображение товара">
             </div>

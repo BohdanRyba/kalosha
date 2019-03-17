@@ -1,8 +1,6 @@
 <?php
 Route::get('/', "HomeController@index")->name('home');
 
-
-
 Auth::routes();
 Route::any('register', function () {
     return redirect('/login');

@@ -51,14 +51,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = \Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'short_description' => 'required|string|max:255',
+            'description' => 'required',
+            'code' => 'required|string|max:255',
+            'price' => 'required',
+            'main_image' => 'mimes:jpeg,bmp,png',
+        ]);
+        $errors = $validator->errors();
+
+
         $product = new Product($request->all());
-        $product->main_image = 'path_to_file';
+        $product->saveImage($request);
         $product->price = (int)$request->input('price');
         $result = $product->save();
         if ($result) {
-            return redirect(route('products.index'));
+            return redirect(route('products.index'))->with('errors', $errors);
         }
         return redirect()->route('products.create')
+            ->with('errors', $errors)
             ->withInput();
     }
 
@@ -73,7 +85,7 @@ class ProductController extends Controller
         $page = $this->page;
         $page['action'] = __FUNCTION__;
         $page['id'] = $product->id;
-        if ($product){
+        if ($product) {
             return view('admin.products.show', compact('page', 'product'));
         }
         return redirect()->back(404);
@@ -89,8 +101,8 @@ class ProductController extends Controller
     {
         $page = $this->page;
         $page['action'] = __FUNCTION__;
-        if ($product){
-            return view('admin.products.edit',compact('page','product'));
+        if ($product) {
+            return view('admin.products.edit', compact('page', 'product'));
         }
         return redirect()->back(404);
     }
@@ -116,7 +128,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if ($product){
+        if ($product) {
             $product->delete();
             return redirect(route('products.index'));
         }
@@ -125,7 +137,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $products = Product::where('code','like', '%'.$request->input('query').'%')->get();
+        $products = Product::where('code', 'like', '%' . $request->input('query') . '%')->get();
         return response()->json($products);
     }
 }
